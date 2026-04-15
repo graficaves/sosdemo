@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOS Computación — Tecnología al mejor precio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="topstrip">
+  ⚡ <strong>ENVÍO GRATIS</strong> a todo el país en compras desde $80.000 &nbsp;•&nbsp; Hasta <strong>12 cuotas sin interés</strong> con todos los bancos
+</div>
+
+<header class="header">
+  <div class="container header-row">
+    <a href="index.html" class="logo">
+      <img src="logo.jpg" alt="SOS Computación">
+    </a>
+    <form class="search" onsubmit="event.preventDefault(); alert('Demo: buscador no activo')">
+      <input type="text" placeholder="Buscar productos, marcas y más...">
+      <button type="submit">🔍</button>
+    </form>
+    <div class="header-actions">
+      <a href="#">👤 Mi cuenta</a>
+      <a href="#">📦 Mis pedidos</a>
+      <a href="#" class="cart-btn">🛒 Carrito <span class="cart-badge">2</span></a>
+    </div>
+  </div>
+</header>
+
+<nav class="catnav">
+  <div class="container catnav-row">
+    <a href="#" class="highlight">📂 Todas las categorías</a>
+    <a href="#">Ofertas del día</a>
+    <a href="#">Notebooks</a>
+    <a href="#">PC Armadas</a>
+    <a href="#">Celulares</a>
+    <a href="#">Componentes</a>
+    <a href="#">Monitores</a>
+    <a href="#">Impresoras</a>
+    <a href="#">Gaming</a>
+    <a href="#">Redes</a>
+    <a href="#">Accesorios</a>
+    <a href="#">Servicio técnico</a>
+  </div>
+</nav>
+
+<main class="container">
+
+  <section class="hero">
+    <div class="hero-carousel" id="heroCarousel">
+      <div class="hero-slide active">
+        <div class="hero-slide-bg" style="background-image:url('https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1600&q=80')"></div>
+        <div class="hero-slide-content">
+          <div class="hero-eyebrow">⚡ HOT SALE SOS</div>
+          <h1>Potencia para trabajar y jugar.</h1>
+          <p>Notebooks de última generación con hasta 12 cuotas sin interés y envío gratis.</p>
+          <a href="#destacados" class="cta">Ver notebooks →</a>
+        </div>
+      </div>
+      <div class="hero-slide">
+        <div class="hero-slide-bg" style="background-image:url('https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1600&q=80')"></div>
+        <div class="hero-slide-content">
+          <div class="hero-eyebrow">🎮 GAMING ZONE</div>
+          <h1>Armá tu setup gamer ideal.</h1>
+          <p>Componentes, placas de video, coolers RGB y periféricos top. Todo en un solo lugar.</p>
+          <a href="#destacados" class="cta">Ver gaming →</a>
+        </div>
+      </div>
+      <div class="hero-slide">
+        <div class="hero-slide-bg" style="background-image:url('https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=1600&q=80')"></div>
+        <div class="hero-slide-content">
+          <div class="hero-eyebrow">📱 NOVEDADES</div>
+          <h1>Los últimos celulares.</h1>
+          <p>iPhone, Samsung y más. Financiación en cuotas y garantía oficial en todos los modelos.</p>
+          <a href="#destacados" class="cta">Ver celulares →</a>
+        </div>
+      </div>
+      <button class="hero-arrow prev" onclick="heroGo(-1)">‹</button>
+      <button class="hero-arrow next" onclick="heroGo(1)">›</button>
+      <div class="hero-dots" id="heroDots"></div>
+    </div>
+  </section>
+
+  <section class="benefits">
+    <div class="benefit">
+      <div class="benefit-icon">🚚</div>
+      <div><strong>Envío gratis</strong><span>En compras desde $80.000</span></div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">💳</div>
+      <div><strong>12 cuotas sin interés</strong><span>Con todos los bancos</span></div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">🛡️</div>
+      <div><strong>Garantía oficial</strong><span>En todos nuestros productos</span></div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">🔧</div>
+      <div><strong>Servicio técnico</strong><span>Reparaciones y soporte</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Comprá por categoría</h2>
+        <div class="section-subtitle">Encontrá lo que buscás más rápido</div>
+      </div>
+      <a href="#" class="section-link">Ver todas →</a>
+    </div>
+    <div class="cat-grid" id="cat-grid"></div>
+  </section>
+
+  <section class="section" id="destacados">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">🔥 Ofertas destacadas</h2>
+        <div class="section-subtitle">Los precios más competitivos, solo por tiempo limitado</div>
+      </div>
+      <a href="#" class="section-link">Ver más →</a>
+    </div>
+    <div class="prod-grid" id="ofertas-grid"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Lo más nuevo</h2>
+        <div class="section-subtitle">Productos recién llegados a nuestro catálogo</div>
+      </div>
+      <a href="#" class="section-link">Ver más →</a>
+    </div>
+    <div class="prod-grid scroll" id="nuevos-grid"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Gaming & Componentes</h2>
+        <div class="section-subtitle">Armá tu setup con los mejores componentes</div>
+      </div>
+      <a href="#" class="section-link">Ver más →</a>
+    </div>
+    <div class="prod-grid" id="gaming-grid"></div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo"><img src="logo.jpg" alt="SOS Computación"></div>
+        <p>Más de 20 años ofreciendo tecnología de calidad al mejor precio. Local físico en la ciudad y envíos a todo el país.</p>
+      </div>
+      <div>
+        <h4>Comprar</h4>
+        <ul>
+          <li><a href="#">Notebooks</a></li>
+          <li><a href="#">Componentes</a></li>
+          <li><a href="#">Gaming</a></li>
+          <li><a href="#">Ofertas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Ayuda</h4>
+        <ul>
+          <li><a href="#">Medios de pago</a></li>
+          <li><a href="#">Envíos</a></li>
+          <li><a href="#">Garantía</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="#">Sobre nosotros</a></li>
+          <li><a href="#">Sucursales</a></li>
+          <li><a href="#">Trabajá con nosotros</a></li>
+          <li><a href="#">Defensa del consumidor</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 SOS Computación. Todos los derechos reservados.</div>
+      <div class="footer-payments">
+        <span>VISA</span><span>MC</span><span>AMEX</span><span>CABAL</span><span>MP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="data/products.js"></script>
+<script>
+const CAT_ICONS = {
+  'celulares-libres': '📱', 'notebooks': '💻', 'discos-solidos-ssd-y-m2': '💾',
+  'monitores': '🖥️', 'impresoras': '🖨️', 'micros-intel': '🧠', 'micros-amd': '🧠',
+  'consolas-portables': '🎮', 'coolers-y-fans': '🌀', 'estabilizadores-y-ups': '🔌',
+  'placas-de-red-wifi-adapter': '📡', 'red-y-telefonia': '🔗', 'pilas': '🔋',
+  'toners-laser': '🖨️', 'teclados': '⌨️', 'mouse': '🖱️', 'auriculares': '🎧',
+  'parlantes': '🔊', 'memorias-ram': '💽', 'placas-de-video': '🎮', 'fuentes': '⚡',
+  'gabinetes': '🏗️', 'motherboards': '🧩',
+};
+const icon = slug => CAT_ICONS[slug] || '🛒';
+const fmt = n => '$ ' + n.toLocaleString('es-AR');
+
+function renderCategories() {
+  const priority = ['celulares-libres','notebooks','monitores','impresoras','consolas-portables','discos-solidos-ssd-y-m2'];
+  const sorted = [...CATEGORIES].sort((a,b) => {
+    const ai = priority.indexOf(a.slug), bi = priority.indexOf(b.slug);
+    if (ai >= 0 && bi >= 0) return ai - bi;
+    if (ai >= 0) return -1; if (bi >= 0) return 1;
+    return b.count - a.count;
+  }).slice(0, 12);
+  document.getElementById('cat-grid').innerHTML = sorted.map(c => `
+    <a href="#" class="cat-tile">
+      <div class="cat-tile-icon">${icon(c.slug)}</div>
+      <div class="cat-tile-name">${c.name}</div>
+      <div class="cat-tile-count">${c.count} productos</div>
+    </a>`).join('');
+}
+
+function cardHTML(p) {
+  const origPrice = p.discount ? Math.round(p.price / (1 - p.discount/100)) : 0;
+  return `
+    <a href="producto.html?id=${p.id}" class="card">
+      ${p.discount ? `<div class="card-badge">-${p.discount}% OFF</div>` : ''}
+      <button class="card-fav" onclick="event.preventDefault(); this.style.color=this.style.color==='rgb(239, 68, 68)'?'':'#ef4444'">♥</button>
+      <div class="card-img"><img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.opacity=.3"></div>
+      <div class="card-body">
+        <div class="card-title">${p.name}</div>
+        ${origPrice ? `<div class="card-price-old">${fmt(origPrice)}</div>` : ''}
+        <div class="card-price-row">
+          <span class="card-price">${fmt(p.price)}</span>
+          ${p.discount ? `<span class="card-disc">${p.discount}% OFF</span>` : ''}
+        </div>
+        <div class="card-install">en ${p.installments} cuotas sin interés</div>
+        ${p.freeShipping ? '<div class="card-ship">🚚 Envío gratis</div>' : ''}
+      </div>
+    </a>`;
+}
+
+function renderGrid(id, list) {
+  document.getElementById(id).innerHTML = list.map(cardHTML).join('');
+}
+
+// === Hero carousel ===
+const heroSlides = document.querySelectorAll('.hero-slide');
+let heroIdx = 0, heroTimer;
+const dotsWrap = document.getElementById('heroDots');
+dotsWrap.innerHTML = [...heroSlides].map((_, i) => `<button onclick="heroSet(${i})"${i===0?' class="active"':''}></button>`).join('');
+function heroSet(i) {
+  heroIdx = (i + heroSlides.length) % heroSlides.length;
+  heroSlides.forEach((s, k) => s.classList.toggle('active', k === heroIdx));
+  dotsWrap.querySelectorAll('button').forEach((b, k) => b.classList.toggle('active', k === heroIdx));
+  clearInterval(heroTimer); heroTimer = setInterval(() => heroGo(1), 5000);
+}
+function heroGo(d) { heroSet(heroIdx + d); }
+heroTimer = setInterval(() => heroGo(1), 5000);
+
+renderCategories();
+const withDiscount = PRODUCTS.filter(p => p.discount > 0).sort((a,b) => b.discount - a.discount);
+renderGrid('ofertas-grid', withDiscount.slice(0, 10));
+renderGrid('nuevos-grid', PRODUCTS.slice(0, 12));
+const gamingSlugs = ['consolas-portables','coolers-y-fans','placas-de-video','micros-intel','micros-amd','memorias-ram','gabinetes','fuentes'];
+const gaming = PRODUCTS.filter(p => gamingSlugs.includes(p.categorySlug));
+renderGrid('gaming-grid', gaming.slice(0, 10));
+</script>
+
+</body>
+</html>

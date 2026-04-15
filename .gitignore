@@ -1,0 +1,11 @@
+node_modules/
+package.json
+package-lock.json
+scrape.mjs
+verify.mjs
+debug-product.mjs
+build-data.mjs
+captures/
+data/sos-raw.json
+.DS_Store
+/tmp/

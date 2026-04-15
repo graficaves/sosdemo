@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Producto — SOS Computación</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="topstrip">
+  ⚡ <strong>ENVÍO GRATIS</strong> a todo el país en compras desde $80.000 &nbsp;•&nbsp; Hasta <strong>12 cuotas sin interés</strong>
+</div>
+
+<header class="header">
+  <div class="container header-row">
+    <a href="index.html" class="logo"><img src="logo.jpg" alt="SOS Computación"></a>
+    <form class="search" onsubmit="event.preventDefault()">
+      <input type="text" placeholder="Buscar productos, marcas y más...">
+      <button type="submit">🔍</button>
+    </form>
+    <div class="header-actions">
+      <a href="#">👤 Mi cuenta</a>
+      <a href="#">📦 Mis pedidos</a>
+      <a href="#" class="cart-btn">🛒 Carrito <span class="cart-badge">2</span></a>
+    </div>
+  </div>
+</header>
+
+<nav class="catnav">
+  <div class="container catnav-row">
+    <a href="index.html">📂 Todas las categorías</a>
+    <a href="#">Ofertas</a>
+    <a href="#">Notebooks</a>
+    <a href="#">Celulares</a>
+    <a href="#">Componentes</a>
+    <a href="#">Gaming</a>
+    <a href="#">Accesorios</a>
+  </div>
+</nav>
+
+<main class="container">
+
+  <nav class="breadcrumb" id="breadcrumb"></nav>
+
+  <section class="product-hero" id="product-hero"></section>
+
+  <section class="product-page">
+    <div class="product-grid">
+      <div class="gallery">
+        <aside class="thumbs" id="thumbs"></aside>
+        <div class="main-img"><img id="mainImg" src="" alt=""></div>
+      </div>
+      <div class="buy-box" id="buybox"></div>
+    </div>
+  </section>
+
+  <section class="desc-wrap" id="desc-wrap">
+    <h2>Descripción del producto</h2>
+    <p id="desc-text"></p>
+    <p>Todos nuestros productos cuentan con <strong>garantía oficial</strong> y soporte técnico directo desde nuestra casa central. Despachamos en el día para compras realizadas antes de las 15hs, con seguimiento online y entregas a todo el país a través de Andreani y Correo Argentino.</p>
+    <p>Consultanos por stock, precios al por mayor y condiciones especiales para empresas y revendedores.</p>
+  </section>
+
+  <section class="specs-wrap">
+    <h2>Especificaciones técnicas</h2>
+    <div class="specs-grid" id="specs"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Productos relacionados</h2>
+        <div class="section-subtitle">Otros clientes también compraron</div>
+      </div>
+    </div>
+    <div class="prod-grid" id="related-grid"></div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo"><img src="logo.jpg" alt="SOS Computación"></div>
+        <p>Más de 20 años ofreciendo tecnología de calidad al mejor precio. Local físico en la ciudad y envíos a todo el país.</p>
+      </div>
+      <div><h4>Comprar</h4><ul><li><a href="#">Notebooks</a></li><li><a href="#">Componentes</a></li><li><a href="#">Gaming</a></li></ul></div>
+      <div><h4>Ayuda</h4><ul><li><a href="#">Medios de pago</a></li><li><a href="#">Envíos</a></li><li><a href="#">Garantía</a></li></ul></div>
+      <div><h4>Empresa</h4><ul><li><a href="#">Sobre nosotros</a></li><li><a href="#">Sucursales</a></li><li><a href="#">Contacto</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 SOS Computación.</div>
+      <div class="footer-payments"><span>VISA</span><span>MC</span><span>AMEX</span><span>CABAL</span><span>MP</span></div>
+    </div>
+  </div>
+</footer>
+
+<script src="data/products.js"></script>
+<script>
+const fmt = n => '$ ' + n.toLocaleString('es-AR');
+const qs = new URLSearchParams(location.search);
+const id = parseInt(qs.get('id')) || 1;
+const p = PRODUCTS.find(x => x.id === id) || PRODUCTS[0];
+
+document.title = p.name + ' — SOS Computación';
+
+document.getElementById('breadcrumb').innerHTML = `
+  <a href="index.html">Inicio</a> <span class="sep">›</span>
+  <a href="#">${p.category}</a> <span class="sep">›</span>
+  <span>${p.name.slice(0, 60)}${p.name.length>60?'…':''}</span>`;
+
+// === HERO ===
+const heroVariant = p.discount >= 15
+  ? { eyebrow: '⚡ OFERTA RELÁMPAGO', title: `<strong>${p.discount}% OFF</strong> en ${p.category}`, tag: 'Solo por hoy' }
+  : p.price > 500000
+  ? { eyebrow: '★ PRODUCTO PREMIUM', title: `Comprá ahora en <strong>${p.installments} cuotas sin interés</strong>`, tag: 'Con todas las tarjetas' }
+  : { eyebrow: '🔥 MÁS VENDIDOS', title: `<strong>Envío gratis</strong> y ${p.installments} cuotas sin interés`, tag: 'Stock disponible' };
+
+const endTime = new Date();
+endTime.setHours(23, 59, 59, 0);
+function pad(n){ return String(n).padStart(2,'0'); }
+function updateTimer() {
+  const diff = Math.max(0, endTime - Date.now());
+  const h = Math.floor(diff / 3600000);
+  const m = Math.floor(diff % 3600000 / 60000);
+  const s = Math.floor(diff % 60000 / 1000);
+  const el = document.getElementById('timer-slots');
+  if (el) el.innerHTML = `<b>${pad(h)}</b><small>:</small><b>${pad(m)}</b><small>:</small><b>${pad(s)}</b>`;
+}
+
+document.getElementById('product-hero').innerHTML = `
+  <div class="product-hero-content">
+    <span class="product-hero-eyebrow">${heroVariant.eyebrow}</span>
+    <h2>${heroVariant.title}</h2>
+    <div class="product-hero-meta">
+      <div><span>🚚</span> ${p.freeShipping ? 'Envío gratis a todo el país' : 'Envío exprés disponible'}</div>
+      <div><span>🛡️</span> Garantía oficial 12 meses</div>
+      <div><span>💳</span> Todas las tarjetas + Mercado Pago</div>
+    </div>
+  </div>
+  <div class="product-hero-timer">
+    <div>
+      <div class="product-hero-timer-label">${heroVariant.tag}</div>
+      <div class="product-hero-timer-slots" id="timer-slots"></div>
+    </div>
+  </div>`;
+updateTimer();
+setInterval(updateTimer, 1000);
+
+document.getElementById('mainImg').src = p.img;
+document.getElementById('mainImg').alt = p.name;
+
+// thumbs — main img + up to 4 extras (same cat first, then anything)
+const sameCat = PRODUCTS.filter(x => x.categorySlug === p.categorySlug && x.id !== p.id);
+const others = PRODUCTS.filter(x => x.categorySlug !== p.categorySlug && x.id !== p.id);
+const extras = [...sameCat, ...others].slice(0, 4);
+const thumbImgs = [p.img, ...extras.map(r => r.img)];
+document.getElementById('thumbs').innerHTML = thumbImgs.map((src, i) => `
+  <div class="thumb ${i===0?'active':''}" onclick="document.querySelectorAll('.thumb').forEach(t=>t.classList.remove('active')); this.classList.add('active'); document.getElementById('mainImg').src='${src}'">
+    <img src="${src}" onerror="this.style.opacity=.3">
+  </div>`).join('');
+
+const origPrice = p.discount ? Math.round(p.price / (1 - p.discount/100)) : 0;
+const cuotaAmt = Math.round(p.price / p.installments);
+
+document.getElementById('buybox').innerHTML = `
+  <div class="buy-seller">Vendido por <strong>SOS Computación</strong> · ⭐ Tienda oficial</div>
+  <h1 class="buy-title">${p.name}</h1>
+  <div class="buy-rating">
+    <span class="stars">★★★★★</span>
+    <span>(${Math.floor(Math.random()*400)+50} opiniones)</span>
+    <span>·</span>
+    <span>+${Math.floor(Math.random()*800)+100} vendidos</span>
+  </div>
+  ${origPrice ? `<div class="buy-price-old">${fmt(origPrice)}</div>` : ''}
+  <div>
+    <span class="buy-price">${fmt(p.price)}</span>
+    ${p.discount ? `<span class="buy-disc">${p.discount}% OFF</span>` : ''}
+  </div>
+  <div class="buy-install">en <strong>${p.installments} cuotas sin interés</strong> de ${fmt(cuotaAmt)}</div>
+
+  <div class="buy-shipping">
+    <div class="buy-shipping-icon">🚚</div>
+    <div>
+      <strong>${p.freeShipping ? 'Envío gratis a todo el país' : 'Envío a todo el país'}</strong>
+      <small>Llega entre el ${new Date(Date.now()+3*864e5).toLocaleDateString('es-AR',{day:'numeric',month:'short'})} y el ${new Date(Date.now()+6*864e5).toLocaleDateString('es-AR',{day:'numeric',month:'short'})}</small>
+    </div>
+  </div>
+
+  <div class="buy-stock">✓ Stock disponible</div>
+
+  <div class="buy-qty">
+    <span>Cantidad:</span>
+    <div class="qty-control">
+      <button onclick="changeQty(-1)">−</button>
+      <span id="qty">1</span>
+      <button onclick="changeQty(1)">+</button>
+    </div>
+    <span style="color:var(--text-muted); font-size:12px">(+ de 10 disponibles)</span>
+  </div>
+
+  <div class="buy-buttons">
+    <button class="btn-primary" onclick="alert('Demo: compra simulada')">Comprar ahora</button>
+    <button class="btn-secondary" onclick="alert('Demo: agregado al carrito')">Agregar al carrito</button>
+  </div>
+
+  <div class="buy-perks">
+    <div><span>🛡️</span> Garantía oficial de 12 meses</div>
+    <div><span>↩️</span> Devolución gratis dentro de los 30 días</div>
+    <div><span>💳</span> Pagá con todas las tarjetas y Mercado Pago</div>
+    <div><span>🏪</span> Retiro gratis en sucursal</div>
+  </div>`;
+
+function changeQty(d) {
+  const el = document.getElementById('qty');
+  el.textContent = Math.max(1, parseInt(el.textContent) + d);
+}
+
+// Fake specs derived from name
+const brands = ['HP','Apple','Gigabyte','TP-Link','Varta','Samsung','Lenovo','Kingston','Logitech','Hiksemi','Lyonn','Jiushark','Pantum'];
+const brand = brands.find(b => p.name.toLowerCase().includes(b.toLowerCase())) || 'Genérico';
+const modelMatch = p.name.match(/\b([A-Z0-9]{2,}[-/]?[A-Z0-9]+)\b/);
+const model = modelMatch ? modelMatch[1] : `SOS-${String(p.id).padStart(4,'0')}`;
+document.getElementById('specs').innerHTML = `
+  <div class="spec-row"><strong>Marca</strong><span>${brand}</span></div>
+  <div class="spec-row"><strong>Modelo</strong><span>${model}</span></div>
+  <div class="spec-row"><strong>Categoría</strong><span>${p.category}</span></div>
+  <div class="spec-row"><strong>Condición</strong><span>Nuevo</span></div>
+  <div class="spec-row"><strong>Garantía</strong><span>12 meses oficial</span></div>
+  <div class="spec-row"><strong>Origen</strong><span>Importado</span></div>
+  <div class="spec-row"><strong>SKU</strong><span>SOS-${String(p.id).padStart(5,'0')}</span></div>
+  <div class="spec-row"><strong>Stock</strong><span>Disponible</span></div>`;
+
+document.getElementById('desc-text').textContent =
+  `${p.name}. Producto de alta calidad disponible en SOS Computación, seleccionado por nuestro equipo técnico para garantizar el mejor rendimiento. Ideal tanto para uso personal como profesional, combina tecnología confiable con una excelente relación precio-calidad.`;
+
+// related
+function cardHTML(p) {
+  return `<a href="producto.html?id=${p.id}" class="card">
+    ${p.discount ? `<div class="card-badge">-${p.discount}% OFF</div>` : ''}
+    <div class="card-img"><img src="${p.img}" loading="lazy" onerror="this.style.opacity=.3"></div>
+    <div class="card-body">
+      <div class="card-title">${p.name}</div>
+      <div class="card-price-row"><span class="card-price">${fmt(p.price)}</span></div>
+      <div class="card-install">en ${p.installments} cuotas sin interés</div>
+      ${p.freeShipping ? '<div class="card-ship">🚚 Envío gratis</div>' : ''}
+    </div>
+  </a>`;
+}
+const relatedAll = PRODUCTS.filter(x => x.id !== p.id).sort(() => Math.random()-.5).slice(0,5);
+document.getElementById('related-grid').innerHTML = relatedAll.map(cardHTML).join('');
+</script>
+
+</body>
+</html>
