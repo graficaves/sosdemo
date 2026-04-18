@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Presupuesto — Sistema de Gestión + E-commerce · SOS Computación</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0A0A0A;
+  --blue: #1E3A8A;
+  --blue-dark: #1E40AF;
+  --blue-light: #3B82F6;
+  --gray: #6B7280;
+  --gray-light: #F3F4F6;
+  --orange: #F97316;
+  --orange-dark: #EA580C;
+  --white: #FFFFFF;
+  --border: #E5E7EB;
+  --radius: 10px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--black);
+  background: var(--gray-light);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -.5px; }
+
+.page {
+  max-width: 900px;
+  margin: 32px auto;
+  background: var(--white);
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.08);
+  overflow: hidden;
+}
+
+/* === HERO === */
+.hero {
+  background: linear-gradient(130deg, var(--black) 0%, #151823 45%, var(--blue) 100%);
+  color: var(--white);
+  padding: 48px 56px 56px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 85% 20%, rgba(249,115,22,.22) 0%, transparent 50%);
+}
+.hero-row { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; gap: 20px; }
+.brand { display: flex; align-items: center; gap: 14px; }
+.brand img { height: 52px; width: auto; }
+.brand-text { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: -.5px; }
+.brand-text .labs { color: var(--orange); }
+
+.meta { text-align: right; font-size: 12px; color: rgba(255,255,255,.75); }
+.meta strong { color: var(--white); font-weight: 600; display: block; font-size: 13px; letter-spacing: .5px; text-transform: uppercase; }
+.meta-code { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; color: var(--orange); margin-top: 4px; }
+
+.hero h1 {
+  position: relative; z-index: 1;
+  font-size: 42px; font-weight: 700; line-height: 1.1;
+  margin-bottom: 14px;
+}
+.hero h1 span { color: var(--orange); }
+.hero-sub { position: relative; z-index: 1; font-size: 17px; opacity: .85; max-width: 640px; }
+
+.hero-client {
+  position: relative; z-index: 1;
+  margin-top: 32px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  padding: 20px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: var(--radius);
+  backdrop-filter: blur(8px);
+}
+.hero-client-col h4 { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--orange); margin-bottom: 8px; font-weight: 600; }
+.hero-client-col p { font-size: 14px; margin-bottom: 2px; opacity: .9; }
+.hero-client-col strong { color: var(--white); font-weight: 600; font-size: 15px; display: block; margin-bottom: 4px; }
+
+/* === SECTIONS === */
+.section { padding: 40px 56px; border-top: 1px solid var(--border); }
+.section-eyebrow { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); font-weight: 700; margin-bottom: 8px; }
+.section h2 { font-size: 28px; font-weight: 700; color: var(--black); margin-bottom: 6px; }
+.section-lead { font-size: 15px; color: var(--gray); margin-bottom: 24px; max-width: 700px; }
+
+/* === RESUMEN === */
+.resumen { padding: 28px 56px; background: var(--gray-light); display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; border-top: 1px solid var(--border); }
+.resumen-item { text-align: center; }
+.resumen-item .num { font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 700; color: var(--blue); line-height: 1; }
+.resumen-item .num small { font-size: 18px; color: var(--orange); }
+.resumen-item .lbl { font-size: 12px; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin-top: 6px; font-weight: 600; }
+
+/* === MODULOS GRID === */
+.mods { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.mod {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 18px 20px; background: var(--white);
+  display: flex; gap: 14px; align-items: flex-start;
+  transition: border-color .15s;
+}
+.mod:hover { border-color: var(--blue); }
+.mod-num {
+  background: var(--black); color: var(--orange);
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 14px;
+  width: 32px; height: 32px; border-radius: 8px;
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.mod h3 { font-size: 15px; font-weight: 600; color: var(--black); margin-bottom: 4px; }
+.mod p { font-size: 13px; color: var(--gray); line-height: 1.5; }
+
+/* === FASES === */
+.fase { display: grid; grid-template-columns: 110px 1fr auto; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--border); align-items: center; }
+.fase:last-child { border-bottom: none; }
+.fase-tag {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+  color: var(--white);
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+  padding: 6px 10px; border-radius: 6px;
+  text-align: center; font-size: 12px; letter-spacing: 1px;
+}
+.fase-body h3 { font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+.fase-body p { font-size: 14px; color: var(--gray); }
+.fase-time {
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: var(--orange);
+  font-size: 16px; white-space: nowrap;
+}
+.fase-time small { color: var(--gray); font-weight: 400; font-size: 12px; display: block; }
+
+/* === MANTENIMIENTO DESTACADO === */
+.mant {
+  margin-top: 24px;
+  background: linear-gradient(135deg, rgba(249,115,22,.12), rgba(249,115,22,.04));
+  border: 1px solid rgba(249,115,22,.4);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: center;
+}
+.mant-icon {
+  background: var(--orange); color: var(--white);
+  width: 56px; height: 56px; border-radius: 12px;
+  display: grid; place-items: center;
+  font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700;
+}
+.mant-body h3 { color: var(--white); font-size: 18px; margin-bottom: 6px; }
+.mant-body p { color: rgba(255,255,255,.75); font-size: 13px; line-height: 1.6; }
+.mant-body p strong { color: var(--orange); }
+.mant-price { text-align: right; }
+.mant-price .amt {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 32px; font-weight: 700; color: var(--orange);
+  line-height: 1;
+}
+.mant-price .per { font-size: 12px; color: rgba(255,255,255,.6); margin-top: 4px; }
+.mant-price .scope {
+  display: inline-block; margin-top: 6px;
+  background: var(--orange); color: var(--black);
+  font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 4px;
+}
+.mant-includes {
+  grid-column: 1 / -1; margin-top: 18px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  padding-top: 18px; border-top: 1px solid rgba(255,255,255,.1);
+}
+.mant-includes div {
+  font-size: 12px; color: rgba(255,255,255,.85);
+  display: flex; gap: 8px; align-items: center;
+}
+.mant-includes div::before { content: '✓'; color: var(--orange); font-weight: 700; }
+@media (max-width: 720px) {
+  .mant { grid-template-columns: 1fr; text-align: center; }
+  .mant-icon { margin: 0 auto; }
+  .mant-price { text-align: center; }
+  .mant-includes { grid-template-columns: 1fr; }
+}
+
+/* === TABLA INVERSION === */
+.inversion { padding: 40px 56px; background: var(--black); color: var(--white); }
+.inversion .section-eyebrow { color: var(--orange); }
+.inversion h2 { color: var(--white); }
+.inv-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+.inv-table th, .inv-table td { padding: 14px 0; text-align: left; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,.1); }
+.inv-table th { color: var(--orange); font-weight: 600; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; }
+.inv-table td.amt { text-align: right; font-family: 'Space Grotesk', sans-serif; font-weight: 600; color: var(--white); }
+.inv-table td.desc { color: rgba(255,255,255,.6); font-size: 12px; max-width: 340px; }
+.inv-table tr.total td {
+  border-bottom: none; padding-top: 20px; font-size: 16px;
+  color: var(--white); font-weight: 700;
+}
+.inv-table tr.total td.amt {
+  font-size: 28px; color: var(--orange);
+}
+.inv-note { margin-top: 20px; padding: 16px 20px; background: rgba(249,115,22,.1); border-left: 3px solid var(--orange); border-radius: 4px; font-size: 13px; color: rgba(255,255,255,.8); }
+
+/* === CONDICIONES === */
+.conds { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.cond h4 { font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--orange); margin-bottom: 10px; }
+.cond ul { list-style: none; }
+.cond li { font-size: 13px; color: var(--gray); padding: 5px 0 5px 22px; position: relative; line-height: 1.5; }
+.cond li::before {
+  content: '→'; position: absolute; left: 0; color: var(--blue-light); font-weight: 700;
+}
+
+/* === FIRMA === */
+.firma { padding: 36px 56px; background: var(--gray-light); display: grid; grid-template-columns: 1fr 1fr; gap: 32px; border-top: 1px solid var(--border); }
+.firma-box {
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 28px 24px; min-height: 140px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.firma-box h4 { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray); margin-bottom: 12px; }
+.firma-line { border-top: 1px solid var(--black); padding-top: 10px; font-size: 13px; color: var(--gray); }
+.firma-line strong { display: block; color: var(--black); font-size: 14px; margin-bottom: 2px; }
+
+/* === FOOTER === */
+.pfooter {
+  background: var(--black); color: var(--white);
+  padding: 32px 56px;
+  display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: center;
+  font-size: 13px;
+}
+.pfooter .brand-text { color: var(--white); }
+.pfooter-contact { color: rgba(255,255,255,.6); text-align: center; }
+.pfooter-contact a { color: var(--orange); text-decoration: none; }
+.pfooter-copy { color: rgba(255,255,255,.4); font-size: 11px; text-align: right; }
+
+/* === ACTIONS (no imprimir) === */
+.actions {
+  max-width: 900px; margin: 0 auto 32px; padding: 0 8px;
+  display: flex; gap: 12px; justify-content: flex-end;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--black); color: var(--white);
+  padding: 10px 18px; border-radius: 8px; font-size: 13px; font-weight: 600;
+  cursor: pointer; border: none; font-family: inherit;
+  transition: .15s;
+}
+.btn:hover { background: var(--blue); }
+.btn.primary { background: var(--orange); }
+.btn.primary:hover { background: var(--orange-dark); }
+
+/* === PRINT === */
+@media print {
+  body { background: white; }
+  .page { box-shadow: none; margin: 0; max-width: none; border-radius: 0; }
+  .actions { display: none; }
+  .section, .inversion, .firma, .pfooter { page-break-inside: avoid; }
+  .hero { page-break-after: avoid; }
+}
+
+@media (max-width: 720px) {
+  .page { margin: 0; border-radius: 0; }
+  .hero, .section, .inversion, .firma, .pfooter { padding-left: 24px; padding-right: 24px; }
+  .hero h1 { font-size: 28px; }
+  .hero-row, .hero-client, .mods, .conds, .firma, .pfooter { grid-template-columns: 1fr; }
+  .hero-row { flex-direction: column; }
+  .meta { text-align: left; }
+  .resumen { grid-template-columns: 1fr; padding: 24px; }
+  .fase { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="actions">
+  <button class="btn" onclick="window.print()">🖨 Imprimir / Guardar PDF</button>
+  <a class="btn primary" href="https://wa.me/5491155555555?text=Hola%20Miguel%2C%20recib%C3%AD%20el%20presupuesto" target="_blank" style="text-decoration:none">✓ Aceptar por WhatsApp</a>
+</div>
+
+<main class="page">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-row">
+      <div class="brand">
+        <img src="logo-forjalabs.png" alt="FORJALABS">
+        <div class="brand-text">FORJA<span class="labs">LABS</span></div>
+      </div>
+      <div class="meta">
+        <strong>Presupuesto</strong>
+        <div class="meta-code">#2026-0417</div>
+        <div style="margin-top:6px">Emitido: 17 de abril, 2026</div>
+        <div>Válido por 30 días</div>
+      </div>
+    </div>
+
+    <h1>Sistema de Gestión Integral<br>+ <span>E-commerce</span> sincronizado.</h1>
+    <p class="hero-sub">Propuesta de desarrollo a medida para unificar operaciones, facturación, stock y ventas online en una sola plataforma.</p>
+
+    <div class="hero-client">
+      <div class="hero-client-col">
+        <h4>Cliente</h4>
+        <strong>SOS Computación</strong>
+        <p>Comercio de tecnología y servicio técnico</p>
+        <p>soscomputacion.com.ar</p>
+      </div>
+      <div class="hero-client-col">
+        <h4>Alcance del proyecto</h4>
+        <strong>Mediana escala · Multi-sucursal</strong>
+        <p>2-3 locales · 5-15 usuarios simultáneos</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESUMEN -->
+  <section class="resumen">
+    <div class="resumen-item">
+      <div class="num">9+1 <small>módulos</small></div>
+      <div class="lbl">Sistema + tienda + IA</div>
+    </div>
+    <div class="resumen-item">
+      <div class="num">4-6 <small>semanas</small></div>
+      <div class="lbl">Plazo de desarrollo</div>
+    </div>
+    <div class="resumen-item">
+      <div class="num">USD 2.000</div>
+      <div class="lbl">Pago único · financiable</div>
+    </div>
+  </section>
+
+  <!-- MODULOS -->
+  <section class="section">
+    <div class="section-eyebrow">Alcance funcional</div>
+    <h2>Módulos incluidos</h2>
+    <p class="section-lead">Plataforma unificada con todos los procesos de gestión, pensada para operar en red entre sucursales.</p>
+
+    <div class="mods">
+      <div class="mod"><div class="mod-num">01</div><div><h3>Facturación electrónica AFIP</h3><p>Factura A/B/C, notas de crédito y débito, CAE en tiempo real, libros IVA digital.</p></div></div>
+      <div class="mod"><div class="mod-num">02</div><div><h3>Control de stock</h3><p>Múltiples depósitos, alertas de mínimos, ingresos/egresos, valorización, inventario.</p></div></div>
+      <div class="mod"><div class="mod-num">03</div><div><h3>Clientes y proveedores</h3><p>CRM con historial, cuenta corriente, saldos, segmentación y listas de precios.</p></div></div>
+      <div class="mod"><div class="mod-num">04</div><div><h3>Compras</h3><p>Órdenes de compra, recepción de mercadería, actualización automática de costos.</p></div></div>
+      <div class="mod"><div class="mod-num">05</div><div><h3>Punto de venta (POS)</h3><p>Ventas en mostrador con lector de código de barras, múltiples cajas simultáneas.</p></div></div>
+      <div class="mod"><div class="mod-num">06</div><div><h3>Caja y cobranzas</h3><p>Efectivo, tarjetas, transferencias, Mercado Pago, cheques, arqueo y cierre.</p></div></div>
+      <div class="mod"><div class="mod-num">07</div><div><h3>Reportes</h3><p>Ventas por período, rentabilidad, stock valorizado, cuenta corriente, ranking de productos.</p></div></div>
+      <div class="mod"><div class="mod-num">08</div><div><h3>Usuarios y permisos</h3><p>Roles configurables, auditoría de operaciones, acceso por sucursal.</p></div></div>
+      <div class="mod"><div class="mod-num">09</div><div><h3>Servicio técnico</h3><p>Ingreso de equipos, presupuestos, órdenes de trabajo, historial y seguimiento.</p></div></div>
+      <div class="mod" style="border-color: var(--orange); background: linear-gradient(135deg, rgba(249,115,22,.04), transparent)">
+        <div class="mod-num" style="background: var(--orange); color: var(--white)">★</div>
+        <div><h3>Tienda online sincronizada</h3><p>Catálogo, stock, precios y pedidos conectados en vivo con el sistema central. Basada en el demo ya presentado.</p></div>
+      </div>
+    </div>
+
+    <div class="section-eyebrow" style="margin-top: 36px">Integraciones con Inteligencia Artificial</div>
+    <h2 style="font-size: 22px; margin-bottom: 18px">IA integrada al sistema</h2>
+    <div class="mods">
+      <div class="mod" style="border-color: rgba(59,130,246,.35); background: linear-gradient(135deg, rgba(59,130,246,.04), transparent)">
+        <div class="mod-num" style="background: var(--blue); color: var(--white)">AI</div>
+        <div><h3>Mejora automática de imágenes de producto</h3><p>Remoción de fondo, realce de calidad y estandarización de fotos del catálogo con IA.</p></div>
+      </div>
+      <div class="mod" style="border-color: rgba(59,130,246,.35); background: linear-gradient(135deg, rgba(59,130,246,.04), transparent)">
+        <div class="mod-num" style="background: var(--blue); color: var(--white)">AI</div>
+        <div><h3>Generación de imágenes para el sitio</h3><p>Banners, promos y piezas visuales generadas por IA para secciones de la tienda.</p></div>
+      </div>
+      <div class="mod" style="border-color: rgba(59,130,246,.35); background: linear-gradient(135deg, rgba(59,130,246,.04), transparent)">
+        <div class="mod-num" style="background: var(--blue); color: var(--white)">AI</div>
+        <div><h3>Chatbot de atención al cliente</h3><p>Asistente virtual 24/7 en la tienda para consultas sobre productos, stock y pedidos. <strong style="color:var(--orange)">Incluido en mantenimiento.</strong></p></div>
+      </div>
+      <div class="mod" style="border-color: rgba(59,130,246,.35); background: linear-gradient(135deg, rgba(59,130,246,.04), transparent)">
+        <div class="mod-num" style="background: var(--blue); color: var(--white)">AI</div>
+        <div><h3>API a cargo del cliente</h3><p>El consumo de las APIs de IA (imágenes) se factura al proveedor elegido — de bajo costo y uso bajo demanda.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FASES -->
+  <section class="section">
+    <div class="section-eyebrow">Cronograma</div>
+    <h2>Fases de desarrollo</h2>
+    <p class="section-lead">Entregas parciales por fase con validación del cliente antes de avanzar.</p>
+
+    <div>
+      <div class="fase">
+        <div class="fase-tag">FASE 1</div>
+        <div class="fase-body"><h3>Relevamiento y diseño</h3><p>Reuniones de requerimientos, diseño UX/UI y arquitectura de base de datos.</p></div>
+        <div class="fase-time">1 sem<small>inicio inmediato</small></div>
+      </div>
+      <div class="fase">
+        <div class="fase-tag">FASE 2</div>
+        <div class="fase-body"><h3>Sistema de gestión</h3><p>Facturación AFIP, stock, clientes, compras, POS, caja, reportes, usuarios y servicio técnico.</p></div>
+        <div class="fase-time">2-3 sem<small>núcleo del sistema</small></div>
+      </div>
+      <div class="fase">
+        <div class="fase-tag">FASE 3</div>
+        <div class="fase-body"><h3>Tienda online + integraciones IA</h3><p>E-commerce sincronizado, pasarela de pagos, generación de imágenes con IA.</p></div>
+        <div class="fase-time">1-2 sem<small>front público</small></div>
+      </div>
+      <div class="fase">
+        <div class="fase-tag">FASE 4</div>
+        <div class="fase-body"><h3>QA, capacitación y puesta en marcha</h3><p>Migración de datos, testing, capacitación al equipo y go-live asistido.</p></div>
+        <div class="fase-time">1 sem<small>lanzamiento</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INVERSION -->
+  <section class="inversion">
+    <div class="section-eyebrow">Inversión</div>
+    <h2>Detalle económico</h2>
+
+    <table class="inv-table">
+      <thead>
+        <tr><th style="width:35%">Concepto</th><th>Descripción</th><th style="text-align:right">Monto</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Desarrollo del sistema de gestión</strong></td>
+          <td class="desc">9 módulos integrados, backend, panel administrativo, diseño y arquitectura.</td>
+          <td class="amt">incluido</td>
+        </tr>
+        <tr>
+          <td><strong>Tienda online sincronizada</strong></td>
+          <td class="desc">E-commerce conectado al sistema, carrito, checkout, pasarela de pagos.</td>
+          <td class="amt">incluido</td>
+        </tr>
+        <tr>
+          <td><strong>Integración, migración y capacitación</strong></td>
+          <td class="desc">Sincronización sistema ↔ tienda, migración de catálogo, capacitación y go-live asistido.</td>
+          <td class="amt">incluido</td>
+        </tr>
+        <tr class="total">
+          <td colspan="2">TOTAL DEL PROYECTO · PAGO ÚNICO</td>
+          <td class="amt">USD 2.000</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="inv-note" style="background: rgba(59,130,246,.1); border-left-color: var(--blue-light); margin-top: 16px">
+      <strong style="color:var(--blue-light)">Opción de financiación:</strong> pago en <strong>hasta 12 cheques mensuales</strong>.
+    </div>
+
+    <div class="mant">
+      <div class="mant-icon">∞</div>
+      <div class="mant-body">
+        <h3>Servicio de mantenimiento mensual</h3>
+        <p>Infraestructura, soporte técnico y nuevas funciones con IA — todo incluido en una única cuota mensual.</p>
+        <p style="margin-top:8px"><strong style="background:var(--orange); color:var(--black); padding:3px 10px; border-radius:4px; font-size:11px; letter-spacing:1px; text-transform:uppercase">🎁 Bonificación</strong> <span style="color:var(--white); font-weight:600">Los primeros 3 meses sin cargo.</span></p>
+      </div>
+      <div class="mant-price">
+        <div class="amt">USD 130</div>
+        <div class="per">por mes · a partir del 4º mes</div>
+        <div class="scope">por las 2 sucursales</div>
+      </div>
+      <div class="mant-includes">
+        <div>Servidor VPS dedicado</div>
+        <div>Casillas de email corporativo</div>
+        <div>Certificado SSL</div>
+        <div>Backups automáticos diarios</div>
+        <div>Asistencia técnica prioritaria</div>
+        <div>Chatbot con IA para atención</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONDICIONES -->
+  <section class="section">
+    <div class="section-eyebrow">Términos</div>
+    <h2>Condiciones comerciales</h2>
+
+    <div class="conds">
+      <div class="cond">
+        <h4>Forma de pago</h4>
+        <ul>
+          <li>Pago único de USD 2.000 al iniciar el proyecto</li>
+          <li>Opción de financiar en hasta 12 cheques mensuales</li>
+          <li>Mantenimiento mensual: USD 130 / mes (2 sucursales) — <strong>primeros 3 meses bonificados</strong></li>
+          <li>Pagos en pesos al tipo de cambio MEP del día</li>
+        </ul>
+      </div>
+      <div class="cond">
+        <h4>Incluye</h4>
+        <ul>
+          <li>Código fuente 100% propiedad del cliente</li>
+          <li>Documentación técnica y de usuario</li>
+          <li>Capacitación a equipo (hasta 4 sesiones)</li>
+          <li>3 meses de garantía sobre el desarrollo</li>
+        </ul>
+      </div>
+      <div class="cond">
+        <h4>No incluye</h4>
+        <ul>
+          <li>Dominio ni licencias de software de terceros</li>
+          <li>Producción de fotos o contenido del catálogo</li>
+          <li>Campañas de marketing o SEO</li>
+          <li>Cambios fuera del alcance acordado</li>
+        </ul>
+      </div>
+      <div class="cond">
+        <h4>Vigencia y aclaraciones</h4>
+        <ul>
+          <li>Presupuesto válido por 30 días desde su emisión</li>
+          <li>Los tiempos se cuentan en semanas hábiles</li>
+          <li>Cambios de alcance se presupuestan por separado</li>
+          <li>Confidencialidad garantizada por contrato</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIRMA -->
+  <section class="firma">
+    <div class="firma-box">
+      <h4>Por FORJALABS</h4>
+      <div class="firma-line">
+        <strong>Miguel Fernández</strong>
+        Director · FORJALABS
+      </div>
+    </div>
+    <div class="firma-box">
+      <h4>Conforme · SOS Computación</h4>
+      <div class="firma-line">
+        <strong>&nbsp;</strong>
+        Firma y aclaración del cliente
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="pfooter">
+    <div class="brand">
+      <img src="logo-forjalabs.png" alt="FORJALABS" style="height:36px; filter: brightness(0) invert(1)">
+    </div>
+    <div class="pfooter-contact">
+      <a href="mailto:hola@forjalabs.com">hola@forjalabs.com</a> &nbsp;·&nbsp;
+      <a href="tel:+5491155555555">+54 11 5555-5555</a> &nbsp;·&nbsp;
+      forjalabs.com.ar
+    </div>
+    <div class="pfooter-copy">© 2026 FORJALABS</div>
+  </footer>
+
+</main>
+
+</body>
+</html>
